@@ -92,10 +92,22 @@ for event in controller.read_loop():
             # Simulate ALT + TAB + TAB using uinput
             device.emit(uinput.KEY_LEFTALT, 1)  # Press ALT
             device.emit(uinput.KEY_TAB, 1)      # Press TAB
-            device.emit(uinput.KEY_TAB, 1)      # Press TAB
             device.emit(uinput.KEY_LEFTALT, 0)  # Release ALT
-            device.emit(uinput.KEY_TAB, 0)      # Press TAB
+            device.emit(uinput.KEY_TAB, 0)      # Release TAB
             device.syn()                        # Synchronize the input
+
+        # Simulate ALT + SHIFT + TAB when BTN_TL is pressed
+        if event.code == ecodes.BTN_TL and event.value == 1:
+            print("BTN_TL pressed -> Switching to the previous window")
+            # Simulate ALT + SHIFT + TAB using uinput
+            device.emit(uinput.KEY_LEFTALT, 1)   # Press ALT
+            device.emit(uinput.KEY_LEFTSHIFT, 1) # Press SHIFT
+            device.emit(uinput.KEY_TAB, 1)       # Press TAB
+            device.emit(uinput.KEY_TAB, 0)       # Release TAB
+            device.emit(uinput.KEY_LEFTSHIFT, 0) # Release SHIFT
+            device.emit(uinput.KEY_LEFTALT, 0)   # Release ALT
+            device.syn()                         # Synchronize the input
+
 
         # Exit with the ESC key for a clean termination
         if event.code == ecodes.KEY_ESC and event.value == 1:
