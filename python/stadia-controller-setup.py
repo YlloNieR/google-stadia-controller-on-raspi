@@ -6,8 +6,11 @@ from evdev import InputDevice, categorize, ecodes
 # Uses '/dev/input/event5' for the Stadia controller
 controller = InputDevice("/dev/input/event5")
 
-# uinput setup for mouse control (left/right mouse button and movements)
-device = uinput.Device([uinput.REL_X, uinput.REL_Y, uinput.BTN_LEFT, uinput.BTN_RIGHT])
+# uinput setup for mouse control (left/right mouse button and movements, and keyboard keys)
+device = uinput.Device([
+    uinput.REL_X, uinput.REL_Y, uinput.BTN_LEFT, uinput.BTN_RIGHT,
+    uinput.KEY_LEFTALT, uinput.KEY_TAB
+])
 
 # Define the deadzone for the joystick
 DEADZONE = 5  # Reduced deadzone for higher sensitivity
@@ -77,6 +80,17 @@ for event in controller.read_loop():
         if event.code == ecodes.BTN_START and event.value == 1:
             print("Start button pressed -> Opening Chromium")
             subprocess.Popen(["chromium-browser"])  # Launch Chromium
+
+        # Simulate ALT + TAB + TAB when BTN_TR is pressed
+        if event.code == ecodes.BTN_TR and event.value == 1:
+            print("BTN_TR pressed -> Switching window")
+            # Simulate ALT + TAB + TAB using uinput
+            device.emit(uinput.KEY_LEFTALT, 1)  # Press ALT
+            device.emit(uinput.KEY_TAB, 1)      # Press TAB
+            device.emit(uinput.KEY_TAB, 1)      # Press TAB
+            device.emit(uinput.KEY_LEFTALT, 0)  # Release ALT
+            device.emit(uinput.KEY_TAB, 0)      # Press TAB
+            device.syn()                        # Synchronize the input
 
         # Exit with the ESC key for a clean termination
         if event.code == ecodes.KEY_ESC and event.value == 1:
