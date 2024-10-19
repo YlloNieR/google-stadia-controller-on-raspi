@@ -8,5 +8,5 @@ bluetoothctl devices
 
 get events on raspi after bt connection
 ```bash
-sudo evtest /dev/input/event5
+evtest /dev/input/event5
 ```
