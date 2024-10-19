@@ -10,3 +10,7 @@ get events on raspi after bt connection
 ```bash
 evtest /dev/input/event5
 ```
+
+# Troubleshoot
+1. If stadia Controller looses Connection by low battery
+    - You neeed to disconnect Stadia Controller manually from raspi. 
