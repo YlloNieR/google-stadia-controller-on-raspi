@@ -1,9 +1,7 @@
-"""
-Author: YlloNieR
-Version: 0.0.1
-Date: 2024-10-19
-Description: This script Allows to move the Mouse and click.
-"""
+__author__ = "YlloNieR"
+__version__ = "0.0.1"
+__date__ = "2024-10-19"
+__description__ = "This script Allows to move the Mouse and click."
 
 import evdev
 import uinput
