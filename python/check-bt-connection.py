@@ -1,3 +1,10 @@
+"""
+Author: YlloNieR
+Version: 0.0.1
+Date: 2024-10-19
+Description: This script Allows to check if the Stadia Controller is connected with Bluetooth and got an own /dev/input/eventX.
+"""
+
 import subprocess
 
 def is_stadia_controller_connected():

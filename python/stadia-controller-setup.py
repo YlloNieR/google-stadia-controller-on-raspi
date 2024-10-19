@@ -1,3 +1,10 @@
+"""
+Author: YlloNieR
+Version: 0.0.1
+Date: 2024-10-19
+Description: This script Allows to move the Mouse and click.
+"""
+
 import evdev
 import uinput
 import subprocess
