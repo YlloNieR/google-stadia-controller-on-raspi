@@ -1,5 +1,6 @@
 import evdev
 import uinput
+import subprocess
 from evdev import InputDevice, categorize, ecodes
 
 # Uses '/dev/input/event5' for the Stadia controller
@@ -71,6 +72,11 @@ for event in controller.read_loop():
         if event.code == ecodes.BTN_NORTH and event.value == 1:
             print("X button pressed -> Exiting")
             break
+
+        # Open Chromium when the START button (BTN_START) is pressed
+        if event.code == ecodes.BTN_START and event.value == 1:
+            print("Start button pressed -> Opening Chromium")
+            subprocess.Popen(["chromium-browser"])  # Launch Chromium
 
         # Exit with the ESC key for a clean termination
         if event.code == ecodes.KEY_ESC and event.value == 1:
