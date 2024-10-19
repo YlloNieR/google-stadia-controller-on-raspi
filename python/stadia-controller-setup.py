@@ -4,6 +4,7 @@ __date__ = "2024-10-19"
 __description__ = "This script Allows to move the Mouse and click."
 
 import evdev
+import time
 import uinput
 import subprocess
 from evdev import InputDevice, categorize, ecodes
@@ -76,11 +77,6 @@ for event in controller.read_loop():
             device.emit(uinput.BTN_RIGHT, 0)
             device.syn()  # Synchronize the input
 
-        # Stop the script when the X button (BTN_NORTH) is pressed
-        if event.code == ecodes.BTN_NORTH and event.value == 1:
-            print("X button pressed -> Exiting")
-            break
-
         # Open Chromium when the START button (BTN_START) is pressed
         if event.code == ecodes.BTN_START and event.value == 1:
             print("Start button pressed -> Opening Chromium")
@@ -108,6 +104,26 @@ for event in controller.read_loop():
             device.emit(uinput.KEY_LEFTALT, 0)   # Release ALT
             device.syn()                         # Synchronize the input
 
+    	# Simulate ALT + F4 when BTN_NORTH is pressed
+        # if event.code == ecodes.BTN_NORTH and event.value == 1:
+        #     print("BTN_NORTH pressed -> Closing the current window")
+        #     # Simulate pressing ALT
+        #     device.emit(uinput.KEY_LEFTALT, 1)  # Press ALT
+
+        #     # Simulate pressing F4
+        #     device.emit(uinput.KEY_F4, 1)       # Press F4
+
+        #     # Simulate releasing F4
+        #     device.emit(uinput.KEY_F4, 0)       # Release F4
+
+        #     # Simulate releasing ALT
+        #     device.emit(uinput.KEY_LEFTALT, 0)  # Release ALT
+        #     device.syn()                        # Synchronize the input
+
+        # Stop the script when the Assitant button (BTN_TRIGGER_HAPPY1) is pressed
+        if event.code == ecodes.BTN_TRIGGER_HAPPY1 and event.value == 1:
+            print("Assitant button pressed -> Exiting")
+            break
 
         # Exit with the ESC key for a clean termination
         if event.code == ecodes.KEY_ESC and event.value == 1:
