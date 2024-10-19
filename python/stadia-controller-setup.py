@@ -67,6 +67,11 @@ for event in controller.read_loop():
             device.emit(uinput.BTN_RIGHT, 0)
             device.syn()  # Synchronize the input
 
+        # Stop the script when the X button (BTN_NORTH) is pressed
+        if event.code == ecodes.BTN_NORTH and event.value == 1:
+            print("X button pressed -> Exiting")
+            break
+
         # Exit with the ESC key for a clean termination
         if event.code == ecodes.KEY_ESC and event.value == 1:
             print("ESC key pressed -> Exiting")
