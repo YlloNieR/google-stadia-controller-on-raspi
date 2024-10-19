@@ -88,21 +88,29 @@ for event in controller.read_loop():
             # Simulate ALT + TAB + TAB using uinput
             device.emit(uinput.KEY_LEFTALT, 1)  # Press ALT
             device.emit(uinput.KEY_TAB, 1)      # Press TAB
-            device.emit(uinput.KEY_LEFTALT, 0)  # Release ALT
+            time.sleep(0.05)                    # Small delay
+            device.syn()                        # Synchronize the input
             device.emit(uinput.KEY_TAB, 0)      # Release TAB
+            device.emit(uinput.KEY_LEFTALT, 0)  # Release ALT
             device.syn()                        # Synchronize the input
 
-        # Simulate ALT + SHIFT + TAB when BTN_TL is pressed
-        if event.code == ecodes.BTN_TL and event.value == 1:
+        # Simulate ALT + SHIFT + TAB for backward (left) window switching
+        if event.code == ecodes.BTN_TL and event.value == 1:  # Example button for backward switching
             print("BTN_TL pressed -> Switching to the previous window")
-            # Simulate ALT + SHIFT + TAB using uinput
             device.emit(uinput.KEY_LEFTALT, 1)   # Press ALT
             device.emit(uinput.KEY_LEFTSHIFT, 1) # Press SHIFT
+            device.emit(uinput.KEY_LEFTALT, 1)   # Hold ALT
+            time.sleep(0.05)                     # Small delay
+
             device.emit(uinput.KEY_TAB, 1)       # Press TAB
             device.emit(uinput.KEY_TAB, 0)       # Release TAB
+            device.syn()                         # Synchronize the input
+
             device.emit(uinput.KEY_LEFTSHIFT, 0) # Release SHIFT
             device.emit(uinput.KEY_LEFTALT, 0)   # Release ALT
+            device.emit(uinput.KEY_LEFTALT, 0)   # Release ALT
             device.syn()                         # Synchronize the input
+
 
     	# Simulate ALT + F4 when BTN_NORTH is pressed
         # if event.code == ecodes.BTN_NORTH and event.value == 1:
